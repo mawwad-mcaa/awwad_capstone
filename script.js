@@ -5,10 +5,19 @@ const cards = 'colors, values';
 let cardDeck = [];
 let myHand = [];
 let theirHand = [];
+let trashpile = [];
 
 function startgame() {
-    cardDesk = [];
-    cards.forEach((cards) => {
-        
+    cardDeck = [];
+        cards.forEach((cards) => {
+            cardDeck.push({ cards });
+            if (cards !=="0") cardDeck.push({ cards });
     });
+}
+
+{
+shuffle(cardDeck);
+
+myHand = cardDeck.splice(0, 7);
+theirHand = cardDeck.splice(0, 7);
 }
