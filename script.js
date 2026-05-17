@@ -72,4 +72,55 @@ function reshuffle() {
                 console.log("Can't reshuffle");
                 return;
     }
+
+    const topCard = trashPile.pop();
+    cardDeck = [...trashPile];
+    trashPile = [topCard];
+    shuffle(cardDeck);
+    console.log("Reshuffled")
 } 
+
+function theirTurn() {
+  const topCard = discardPile[discardPile.length - 1];
+  const validCards = theirHand.filter(
+    (card) =>
+      card.color === topCard.color ||
+      card.value === topCard.value ||
+  );
+
+  if (validCards.length > 0) {
+    const cardPlay = validCards[0];
+    const handIndex = theirHand.indexOf(cardPlay);
+    }
+
+    theirHand.splice(handIndex, 1);
+    discardPile.push(cardToPlay);
+    updateUI();
+
+    if (deck.length > 0) {
+      theirHand.push(deck.pop());
+      updateUI();
+    }
+    isPlayerTurn = true;
+  }
+}
+
+function handleWin(winner) {
+  const playAgain = confirm(
+    `UNO! ${winner} wins!`,
+  );
+  if (playAgain) {
+    isPlayerTurn = true;
+    pendingWildCardIndex = -1;
+    initializeGame();
+  } else {
+    isPlayerTurn = false;
+    document.getElementById("player-hand").innerHTML =
+      `<h3 class="text-center w-100 mt-4">Game Over</h3>`;
+    document.getElementById("discard-pile").innerHTML = "<h2>UNO</h2>";
+    document.getElementById("discard-pile").className =
+      "uno-card card-back d-flex align-items-center justify-content-center mx-auto";
+  }
+}
+
+window.onload = initializeGame;
